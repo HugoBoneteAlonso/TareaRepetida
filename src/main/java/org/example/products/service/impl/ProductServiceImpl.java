@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.products.dto.ProductRequestDto;
 import org.example.products.dto.ProductResponseDto;
 import org.example.products.entity.Product;
+import org.example.products.exception.ProductNotFoundException;
 import org.example.products.mapper.ProductMapper;
 import org.example.products.repository.ProductRepository;
 import org.example.products.service.ProductService;
@@ -20,37 +21,37 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponseDto> getAll() {
-        return repository.findAll().stream().map(mapper::toResponseDTO).toList();
+        return repository.findAll().stream().map(mapper::toResponseDto).toList();
     }
 
     @Override
     public ProductResponseDto getById(Long id) {
-        return repository.findById(id).map(mapper::toResponseDTO).orElseThrow();
+        return repository.findById(id).map(mapper::toResponseDto).orElseThrow(() -> new ProductNotFoundException("Producto con el id " + id + " no encontrado"));
     }
 
     @Override
     public ProductResponseDto create(ProductRequestDto dto) {
         Product toCreate = mapper.toEntity(dto);
         repository.save(toCreate);
-        return mapper.toResponseDTO(toCreate);
+        return mapper.toResponseDto(toCreate);
     }
 
     @Override
     public ProductResponseDto update(Long id, ProductRequestDto dto) {
-        Product toUpdate = repository.findById(id).orElseThrow();
-        mapper.updateEntityFromDTO(dto, toUpdate);
+        Product toUpdate = repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Producto con el id " + id + " no encontrado"));
+        mapper.updateEntityFromDto(dto, toUpdate);
         repository.save(toUpdate);
-        return mapper.toResponseDTO(toUpdate);
+        return mapper.toResponseDto(toUpdate);
     }
 
     @Override
     public void delete(Long id) {
-        Product toDelete = repository.findById(id).orElseThrow();
+        Product toDelete = repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Producto con el id " + id + " no encontrado"));
         repository.delete(toDelete);
     }
 
     @Override
     public List<ProductResponseDto> getAllByName(String name) {
-        return repository.findAllByName(name).stream().map(mapper::toResponseDTO).toList();
+        return repository.findAllByName(name).stream().map(mapper::toResponseDto).toList();
     }
 }

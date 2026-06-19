@@ -9,11 +9,11 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
-    ProductResponseDto toResponseDTO(Product product);
+    ProductResponseDto toResponseDto(Product product);
 
     @Mapping(target = "createdAt", ignore = true)
     Product toEntity(ProductRequestDto dto);
 
     @Mapping(target = "createdAt", ignore = true)
-    void updateEntityFromDTO(ProductRequestDto dto, @MappingTarget Product product);
+    void updateEntityFromDto(ProductRequestDto dto, @MappingTarget Product product);
 }

@@ -1,8 +1,6 @@
 package org.example.products.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,14 +15,17 @@ import java.math.BigDecimal;
 public class ProductRequestDto {
 
     @Size(max = 50)
+    @NotBlank
     private String name;
 
     @Size(max = 100)
     private String description;
 
     @Positive
+    @NotNull
     private BigDecimal price;
 
     @Min(0)
+    @NotNull
     private Integer stock;
 }

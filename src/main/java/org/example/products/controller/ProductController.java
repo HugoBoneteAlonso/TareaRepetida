@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductResponseDto createProduct(@RequestBody ProductRequestDto dto) {
+    public ProductResponseDto createProduct(@Valid @RequestBody ProductRequestDto dto) {
         return service.create(dto);
     }
 

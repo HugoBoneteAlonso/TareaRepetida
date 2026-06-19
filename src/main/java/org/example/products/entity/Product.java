@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -27,9 +29,11 @@ public class Product {
     private String description;
 
     @Positive
+    @NotNull
     private BigDecimal price;
 
     @Min(0)
+    @NotNull
     private Integer stock;
 
     @Column(name = "created_at")
