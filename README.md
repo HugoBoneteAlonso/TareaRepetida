@@ -103,7 +103,7 @@
   "description": "desc",
   "price": 100.0,
   "stock": 10,
-  "createdAt": null
+  "createdAt": "2026-06-22T11:35:25.490746"
 }
 ```
 
