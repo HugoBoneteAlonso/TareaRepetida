@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto getById(Long id) {
-        return repository.findById(id).map(mapper::toResponseDto).orElseThrow(() -> new ProductNotFoundException("Producto con el id " + id + " no encontrado"));
+        return repository.findById(id).map(mapper::toResponseDto).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto update(Long id, ProductRequestDto dto) {
-        Product toUpdate = repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Producto con el id " + id + " no encontrado"));
+        Product toUpdate = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         mapper.updateEntityFromDto(dto, toUpdate);
         repository.save(toUpdate);
         return mapper.toResponseDto(toUpdate);
@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-        Product toDelete = repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Producto con el id " + id + " no encontrado"));
+        Product toDelete = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         repository.delete(toDelete);
     }
 

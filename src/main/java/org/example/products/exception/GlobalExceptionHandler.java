@@ -1,60 +1,79 @@
 package org.example.products.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.products.dto.error.ErrorResponseDto;
+import org.example.products.dto.error.FieldErrorDto;
+import org.example.products.dto.error.ValidationErrorResponseDto;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-    private static final String TIMESTAMP = "timestamp";
-    private static final String STATUS = "status";
-    private static final String ERROR = "error";
-    private static final String MESSAGE = "message";
-    private static final String PATH = "path";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationErrorResponseDto handleMethodArgumentNotValidException(MethodArgumentNotValidException ex
     , HttpServletRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put(TIMESTAMP, LocalDateTime.now());
-        body.put(STATUS, 400);
-        body.put(ERROR, "BAD_REQUEST");
-        body.put(MESSAGE, ex.getMessage());
-        body.put(PATH, request.getRequestURI());
+        List<FieldErrorDto> fieldErrors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(fe -> new FieldErrorDto(
+                        fe.getField(),
+                        fe.getRejectedValue(),
+                        fe.getDefaultMessage()))
+                .toList();
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleGenericException(Exception ex,
-     HttpServletRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put(TIMESTAMP, LocalDateTime.now());
-        body.put(STATUS, 500);
-        body.put(ERROR, "INTERNAL_SERVER_ERROR");
-        body.put(MESSAGE, ex.getMessage());
-        body.put(PATH, request.getRequestURI());
-
-        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ValidationErrorResponseDto(LocalDateTime.now(), 400, "Bad Request",
+                "La peticion contiene campos invalidos", request.getRequestURI(),
+                fieldErrors);
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<Object> handleProductNotFoundException(ProductNotFoundException ex,
-     HttpServletRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put(TIMESTAMP, LocalDateTime.now());
-        body.put(STATUS, 404);
-        body.put(ERROR, "PRODUCT_NOT_FOUND");
-        body.put(MESSAGE, ex.getMessage());
-        body.put(PATH, request.getRequestURI());
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponseDto handleProductNotFoundException(ProductNotFoundException ex, HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 404,"Product Not Found",
+                ex.getMessage(), request.getRequestURI());
+    }
 
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponseDto handleGenericException(Exception ex, HttpServletRequest request) {
+
+        return new ErrorResponseDto(LocalDateTime.now(), 404,"Internal Server Error",
+                "Ha ocurrido una error inesperado", request.getRequestURI());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDto handleHttpMessageNotReadableException(HttpMessageNotReadableException ex
+            , HttpServletRequest request) {
+
+        return new ErrorResponseDto(LocalDateTime.now(), 400, "Bad Request",
+                "Los campos del body estan mal formados", request.getRequestURI());
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDto handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException  ex
+            , HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 400, "Bad Request",
+                "Parametro del path con tipo incorrecto", request.getRequestURI());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDto handleDataIntegrityViolationException(DataIntegrityViolationException ex
+            , HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 409, "Bad Request",
+                "Ya existe un producto con este nombre", request.getRequestURI());
     }
 }

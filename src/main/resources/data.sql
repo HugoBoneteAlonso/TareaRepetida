@@ -1,3 +1,5 @@
+ALTER TABLE product ADD CONSTRAINT uq_name_prod UNIQUE (name);
+
 INSERT INTO product (name, description, price, stock, created_at)
 VALUES ('TV Samsung 55"', 'Smart TV 4K UHD', 499.99, 15, CURRENT_TIMESTAMP);
 

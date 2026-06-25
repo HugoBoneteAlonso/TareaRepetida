@@ -13,19 +13,18 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequestDto {
-
-    @Size(max = 50)
-    @NotBlank
+    @Size(max = 50, message = "El nombre debe tener menos de 50 caracteres")
+    @NotBlank(message = "El nombre no puede ser nulo")
     private String name;
 
-    @Size(max = 100)
+    @Size(max = 100, message = "La descripcion debe tener menos de 100 caracteres")
     private String description;
 
-    @Positive
-    @NotNull
+    @Positive(message = "El precio debe ser positivo")
+    @NotNull(message = "El precion no puede ser nulo")
     private BigDecimal price;
 
-    @Min(0)
-    @NotNull
+    @PositiveOrZero(message = "El stock debe ser igual o mayor a 0")
+    @NotNull(message = "El stock no puede ser nulo")
     private Integer stock;
 }
