@@ -15,9 +15,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final String BAD_REQUEST = "Bad Request";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -32,8 +34,8 @@ public class GlobalExceptionHandler {
                         fe.getDefaultMessage()))
                 .toList();
 
-        return new ValidationErrorResponseDto(LocalDateTime.now(), 400, "Bad Request",
-                "La peticion contiene campos invalidos", request.getRequestURI(),
+        return new ValidationErrorResponseDto(LocalDateTime.now(), 400, BAD_REQUEST,
+                "La peticion contiene campos invalidos", request.getRequestURI(), UUID.randomUUID(),
                 fieldErrors);
     }
 
@@ -41,15 +43,15 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponseDto handleProductNotFoundException(ProductNotFoundException ex, HttpServletRequest request) {
         return new ErrorResponseDto(LocalDateTime.now(), 404,"Product Not Found",
-                ex.getMessage(), request.getRequestURI());
+                ex.getMessage(), request.getRequestURI(),UUID.randomUUID());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponseDto handleGenericException(Exception ex, HttpServletRequest request) {
 
-        return new ErrorResponseDto(LocalDateTime.now(), 404,"Internal Server Error",
-                "Ha ocurrido una error inesperado", request.getRequestURI());
+        return new ErrorResponseDto(LocalDateTime.now(), 500,"Internal Server Error",
+                "Ha ocurrido una error inesperado", request.getRequestURI(), UUID.randomUUID());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -57,23 +59,23 @@ public class GlobalExceptionHandler {
     public ErrorResponseDto handleHttpMessageNotReadableException(HttpMessageNotReadableException ex
             , HttpServletRequest request) {
 
-        return new ErrorResponseDto(LocalDateTime.now(), 400, "Bad Request",
-                "Los campos del body estan mal formados", request.getRequestURI());
+        return new ErrorResponseDto(LocalDateTime.now(), 400, BAD_REQUEST,
+                "Los campos del body estan mal formados", request.getRequestURI(), UUID.randomUUID());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDto handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException  ex
             , HttpServletRequest request) {
-        return new ErrorResponseDto(LocalDateTime.now(), 400, "Bad Request",
-                "Parametro del path con tipo incorrecto", request.getRequestURI());
+        return new ErrorResponseDto(LocalDateTime.now(), 400, BAD_REQUEST,
+                "Parametro del path con tipo incorrecto", request.getRequestURI(), UUID.randomUUID());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDto handleDataIntegrityViolationException(DataIntegrityViolationException ex
             , HttpServletRequest request) {
-        return new ErrorResponseDto(LocalDateTime.now(), 409, "Bad Request",
-                "Ya existe un producto con este nombre", request.getRequestURI());
+        return new ErrorResponseDto(LocalDateTime.now(), 409, BAD_REQUEST,
+                "Ya existe un producto con este nombre", request.getRequestURI(), UUID.randomUUID());
     }
 }

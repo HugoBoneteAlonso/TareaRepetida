@@ -145,17 +145,164 @@
 }
 ```
 
-### GET Product By Id But Not Found
+##  Manejo de Errores
+
+### GET Product By Id But Not Found, Update Product Not Found, Delete Product Not Found
 ```
-    http://localhost:8080/api/v1/products/20
+    http://localhost:8080/api/v1/products/9999
 ```
 ***Response***
 ```json
 {
-  "timestamp": "2026-06-19T14:55:40.3974441",
+  "timeStamp": "2026-06-26T11:09:45.5915113",
   "status": 404,
-  "error": "PRODUCT_NOT_FOUND",
-  "message": "Producto con el id 20 no encontrado"
+  "error": "Product Not Found",
+  "message": "Producto con id 9999 no encontrado",
+  "path": "/api/v1/products/9999",
+  "traceId": "1aff0eb8-2d8a-4240-9ffc-736a2f703649"
+}
+```
+
+### GET Product Wrong Path
+```
+    http://localhost:8080/api/v1/products/abc
+```
+***Response***
+```json
+{
+  "timeStamp": "2026-06-26T11:11:03.6259156",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Parametro del path con tipo incorrecto",
+  "path": "/api/v1/products/abc",
+  "traceId": "dc138362-058f-43d8-ae4c-06f8d3a6ee34"
+}
+```
+
+### Create Product With Empty Name
+```
+    http://localhost:8080/api/v1/products
+```
+
+***Body***
+```json
+{
+  "name": "",
+  "description": "desc",
+  "price": 100.0,
+  "stock": 10
+}
+```
+
+***Response***
+```json
+{
+  "timeStamp": "2026-06-26T11:11:49.4875458",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "La peticion contiene campos invalidos",
+  "path": "/api/v1/products",
+  "traceId": "ff95ee16-0f94-47d3-a904-270a73fde10b",
+  "fieldErrors": [
+    {
+      "field": "name",
+      "rejectedValue": "",
+      "message": "El nombre no puede ser nulo"
+    }
+  ]
+}
+```
+
+### Create Product With Negative Price
+```
+    http://localhost:8080/api/v1/products
+```
+
+***Body***
+```json
+{
+  "name": "Producto prueba",
+  "description": "desc",
+  "price": -100.0,
+  "stock": 10
+}
+```
+
+***Response***
+```json
+{
+  "timeStamp": "2026-06-26T09:53:24.0211511",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "La peticion contiene campos invalidos",
+  "path": "/api/v1/products",
+  "traceId": "e867bc90-1299-48d1-9f27-ca9d57e7cc36",
+  "fieldErrors": [
+    {
+      "field": "price",
+      "rejectedValue": -100.0,
+      "message": "El precio debe ser positivo"
+    }
+  ]
+}
+```
+
+### Create Product With Invalid Body
+```
+    http://localhost:8080/api/v1/products
+```
+
+***Body***
+```json
+{
+  "name": "Product 1",
+  "price": 10.5,
+  "stock": 5
+```
+
+***Response***
+```json
+{
+  "timeStamp": "2026-06-26T11:16:56.0162108",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Los campos del body estan mal formados",
+  "path": "/api/v1/products",
+  "traceId": "84b681ea-5e2f-4a19-9cc4-fba362bdcb9f"
+}
+```
+
+### Create Product With Special Characters
+```
+    http://localhost:8080/api/v1/products
+```
+
+***Body***
+```json
+{
+  "name": "Nombre! nuevo",
+  "description": "desc",
+  "price": 100.0,
+  "stock": 10
+}
+```
+
+***Response***
+```json
+{
+  "timeStamp": "2026-06-26T11:18:16.0092251",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "La peticion contiene campos invalidos",
+  "path": "/api/v1/products",
+  "traceId": "4e2efc96-93ac-4503-8712-4818f420258c",
+  "fieldErrors": [
+    {
+      "field": "name",
+      "rejectedValue": "Nombre! nuevo",
+      "message": "El nombre no puede contener caracteres especiales"
+    }
+  ]
 }
 ```
 
@@ -169,3 +316,6 @@ https://bill-tetrault.github.io/howtomarkdown/
 https://www.geeksforgeeks.org/advance-java/spring-mvc-controlleradvice-annotation-for-global-exception-handling/  
 https://zetcode.com/springboot/controlleradvice/  
 https://medium.com/javajams/master-spring-boot-customized-exceptions-a-practical-guide-c5bc3e1a1efb  
+https://www.baeldung.com/javax-validation-method-constraints  
+https://www.javaguides.net/2025/03/spring-boot-webmvctest-annotation.html  
+https://es.stackoverflow.com/questions/607140/c%c3%b3mo-saber-si-un-string-contiene-alg%c3%ban-caracter-especial-como-etc-e  

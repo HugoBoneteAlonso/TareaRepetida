@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.products.constraint.ValidName;
 
 import java.math.BigDecimal;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 public class ProductRequestDto {
     @Size(max = 50, message = "El nombre debe tener menos de 50 caracteres")
     @NotBlank(message = "El nombre no puede ser nulo")
+    @ValidName
     private String name;
 
     @Size(max = 100, message = "La descripcion debe tener menos de 100 caracteres")
