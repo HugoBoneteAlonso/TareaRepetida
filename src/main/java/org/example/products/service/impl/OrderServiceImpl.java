@@ -71,12 +71,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(Long id) {
-        repository.deleteById(id);
+        Order order = repository.findById(id).orElseThrow(()
+                -> new OrderNotFoundException(id));
+
+        if(order.getStatus() == OrderStatus.SHIPPED) {
+            throw(new IllegalStateException("Can not cancel order with Shipped status"));
+        }
+
     }
 
     @Override
     public List<OrderResponseDto> getAllOrdersByCustomer(Long id) {
         return repository.findAllByCustomerId(id).stream().map(mapper :: orderToOrderDto)
                 .toList();
+    }
+
+    @Override
+    public List<OrderResponseDto> getAllOrdersByStatus(String status) {
+        return repository.findAllByStatus(OrderStatus.valueOf(status)).stream()
+                .map(mapper::orderToOrderDto).toList();
     }
 }

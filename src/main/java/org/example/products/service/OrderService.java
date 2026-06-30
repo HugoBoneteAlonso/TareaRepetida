@@ -13,5 +13,6 @@ public interface OrderService {
     OrderResponseDto updateOrderStatus(Long id, OrderStatus status);
     void deleteOrder(Long id);
     List<OrderResponseDto> getAllOrdersByCustomer(Long id);
+    List<OrderResponseDto> getAllOrdersByStatus(String status);
 
 }

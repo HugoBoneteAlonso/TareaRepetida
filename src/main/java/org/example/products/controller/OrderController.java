@@ -40,4 +40,14 @@ public class OrderController {
     public void deleteOrder(@PathVariable Long id) {
         service.deleteOrder(id);
     }
+
+    @GetMapping("/status")
+    public List<OrderResponseDto> getAllByStatus(@RequestParam String status) {
+        return service.getAllOrdersByStatus(status);
+    }
+
+    @GetMapping("/customerId")
+    public List<OrderResponseDto> getAllOrdersByCustomer(@RequestParam Long id) {
+        return service.getAllOrdersByCustomer(id);
+    }
 }

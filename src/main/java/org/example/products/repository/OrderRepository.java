@@ -1,6 +1,7 @@
 package org.example.products.repository;
 
 import org.example.products.entity.Order;
+import org.example.products.entity.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findAllWithDetails();
 
     List<Order> findAllByCustomerId(Long id);
+
+    List<Order> findAllByStatus(OrderStatus status);
 }
