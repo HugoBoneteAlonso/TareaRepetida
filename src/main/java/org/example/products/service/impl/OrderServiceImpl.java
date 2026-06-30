@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
         if(order.getStatus() == OrderStatus.SHIPPED) {
             throw(new IllegalStateException("Can not cancel order with Shipped status"));
         }
-
+        repository.delete(order);
     }
 
     @Override

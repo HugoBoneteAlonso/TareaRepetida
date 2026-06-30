@@ -306,6 +306,62 @@
 }
 ```
 
+### GET Customers By Id
+```
+    http://localhost:8080/api/v1/customers/1
+```
+***Response***
+```json
+{
+  "id": 1,
+  "name": "Laura Garcia",
+  "email": "laura.garcia@example.com",
+  "totalOrders": 6,
+  "totalSpent": 7319.82
+}
+```
+
+### GET Orders By Status
+```
+    http://localhost:8080/api/v1/orders/status?status=PENDING
+```
+***Response***
+```json
+[
+  {
+    "id": 1,
+    "orderDate": "2026-06-30T13:33:56.085446",
+    "status": "PENDING",
+    "customer": {
+      "id": 1,
+      "name": "Laura Garcia",
+      "email": "laura.garcia@example.com",
+      "totalOrders": null,
+      "totalSpent": null
+    },
+    "lines": [
+      {
+        "id": 1,
+        "productId": 3,
+        "productName": "iPhone 14",
+        "quantity": 1,
+        "unitPrice": 999.99,
+        "lineTotal": 999.99
+      },
+      {
+        "id": 2,
+        "productId": 14,
+        "productName": "Disco SSD Samsung 1TB",
+        "quantity": 2,
+        "unitPrice": 109.99,
+        "lineTotal": 219.98
+      }
+    ],
+    "totalAmount": 1219.97
+  }
+]
+```
+
 ##  Enlaces usados para la Tarea
 https://stackoverflow.com/questions/60279760/how-to-generate-a-createddate-localdatetime-as-timestamp  
 https://stackoverflow.com/questions/49954812/how-can-you-make-a-created-at-column-generate-the-creation-date-time-automatical  
