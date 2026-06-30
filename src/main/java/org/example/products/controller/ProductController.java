@@ -2,8 +2,8 @@ package org.example.products.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.products.dto.ProductRequestDto;
-import org.example.products.dto.ProductResponseDto;
+import org.example.products.dto.product.ProductRequestDto;
+import org.example.products.dto.product.ProductResponseDto;
 import org.example.products.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 

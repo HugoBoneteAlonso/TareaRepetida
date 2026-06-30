@@ -1,46 +1,54 @@
-ALTER TABLE product ADD CONSTRAINT uq_name_prod UNIQUE (name);
+INSERT INTO product (name, description, price, stock, created_at) VALUES
+      ('TV Samsung 55"', 'Smart TV 4K UHD', 499.99, 15, CURRENT_TIMESTAMP),
+      ('Laptop Lenovo ThinkPad', 'Laptop empresarial 16GB RAM', 899.99, 10, CURRENT_TIMESTAMP),
+      ('iPhone 14', 'Apple smartphone 128GB', 999.99, 20, CURRENT_TIMESTAMP),
+      ('Auriculares Sony WH-1000XM5', 'Auriculares inalámbricos con cancelación de ruido', 299.99, 25, CURRENT_TIMESTAMP),
+      ('Monitor LG 27"', 'Monitor IPS Full HD', 179.99, 12, CURRENT_TIMESTAMP),
+      ('Teclado Mecánico RGB', 'Teclado gaming con switches rojos', 79.99, 30, CURRENT_TIMESTAMP),
+      ('Ratón Logitech G502', 'Ratón gaming inalámbrico', 49.99, 40, CURRENT_TIMESTAMP),
+      ('Tablet Samsung Galaxy Tab', 'Tablet Android de 10 pulgadas', 249.99, 18, CURRENT_TIMESTAMP),
+      ('PlayStation 5', 'Consola de nueva generación', 549.99, 5, CURRENT_TIMESTAMP),
+      ('Xbox Series X', 'Consola Microsoft de alto rendimiento', 499.99, 7, CURRENT_TIMESTAMP),
+      ('Cámara Canon EOS', 'Cámara réflex digital', 799.99, 6, CURRENT_TIMESTAMP),
+      ('Smartwatch Xiaomi Band', 'Reloj inteligente deportivo', 69.99, 35, CURRENT_TIMESTAMP),
+      ('Altavoz JBL Flip', 'Altavoz portátil Bluetooth', 89.99, 22, CURRENT_TIMESTAMP),
+      ('Disco SSD Samsung 1TB', 'Almacenamiento SSD NVMe', 109.99, 50, CURRENT_TIMESTAMP),
+      ('Router TP-Link AX1800', 'Router WiFi de alta velocidad', 59.99, 28, CURRENT_TIMESTAMP),
+      ('MacBook Air M3', 'Portátil Apple ultraligero', 1299.99, 8, CURRENT_TIMESTAMP),
+      ('iPad Air', 'Tablet Apple de alto rendimiento', 699.99, 14, CURRENT_TIMESTAMP),
+      ('Samsung Galaxy S24', 'Smartphone Android gama alta', 1099.99, 16, CURRENT_TIMESTAMP),
+      ('Nintendo Switch OLED', 'Consola híbrida portátil', 349.99, 11, CURRENT_TIMESTAMP),
+      ('Impresora HP LaserJet', 'Impresora láser monocromo', 229.99, 13, CURRENT_TIMESTAMP),
+      ('Webcam Logitech C920', 'Webcam Full HD para videollamadas', 79.99, 26, CURRENT_TIMESTAMP),
+      ('Micrófono HyperX QuadCast', 'Micrófono USB para streaming', 139.99, 19, CURRENT_TIMESTAMP),
+      ('Disco Duro Externo Seagate 2TB', 'Almacenamiento portátil USB 3.0', 89.99, 32, CURRENT_TIMESTAMP),
+      ('Memoria USB Kingston 128GB', 'Pendrive USB 3.2', 24.99, 60, CURRENT_TIMESTAMP),
+      ('Tarjeta Gráfica RTX 4070', 'GPU NVIDIA para gaming y edición', 699.99, 9, CURRENT_TIMESTAMP),
+      ('Procesador Intel Core i7', 'CPU Intel de 14ª generación', 389.99, 17, CURRENT_TIMESTAMP),
+      ('Placa Base ASUS Prime', 'Compatible con Intel DDR5', 199.99, 15, CURRENT_TIMESTAMP),
+      ('Fuente Corsair 750W', 'Fuente certificada 80 Plus Gold', 119.99, 20, CURRENT_TIMESTAMP),
+      ('Silla Gaming DXRacer', 'Silla ergonómica ajustable', 299.99, 7, CURRENT_TIMESTAMP),
+      ('Escritorio Elevable', 'Mesa regulable en altura', 349.99, 6, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('TV Samsung 55"', 'Smart TV 4K UHD', 499.99, 15, CURRENT_TIMESTAMP);
 
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Laptop Lenovo ThinkPad', 'Laptop empresarial 16GB RAM', 899.99, 10, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('iPhone 14', 'Apple smartphone 128GB', 999.99, 20, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Auriculares Sony', 'Noise Cancelling inalámbricos', 199.99, 25, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Monitor LG 27"', 'Monitor IPS Full HD', 179.99, 12, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Teclado Mecánico', 'Teclado RGB switches rojos', 79.99, 30, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Ratón Logitech', 'Ratón inalámbrico gaming', 49.99, 40, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Tablet Samsung', 'Tablet Android 10 pulgadas', 249.99, 18, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('PlayStation 5', 'Consola nueva generación', 549.99, 5, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Xbox Series X', 'Consola Microsoft', 499.99, 7, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Cámara Canon', 'Cámara réflex digital', 799.99, 6, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Smartwatch Xiaomi', 'Reloj inteligente deportivo', 69.99, 35, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Altavoz JBL', 'Altavoz portátil Bluetooth', 89.99, 22, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Disco SSD 1TB', 'Almacenamiento rápido SSD', 109.99, 50, CURRENT_TIMESTAMP);
-
-INSERT INTO product (name, description, price, stock, created_at)
-VALUES ('Router TP-Link', 'Router WiFi alta velocidad', 59.99, 28, CURRENT_TIMESTAMP);
+INSERT INTO customer (name, email, phone) VALUES
+      ('Laura Garcia', 'laura.garcia@example.com', '+34600111222'),
+      ('Carlos Martinez', 'carlos.martinez@example.com', '+34600111223'),
+      ('Ana Lopez', 'ana.lopez@example.com', '+34600111224'),
+      ('Miguel Sanchez', 'miguel.sanchez@example.com', '+34600111225'),
+      ('Sofia Romero', 'sofia.romero@example.com', '+34600111226'),
+      ('Javier Torres', 'javier.torres@example.com', '+34600111227'),
+      ('Elena Ruiz', 'elena.ruiz@example.com', '+34600111228'),
+      ('Pablo Diaz', 'pablo.diaz@example.com', '+34600111229'),
+      ('Marta Moreno', 'marta.moreno@example.com', '+34600111230'),
+      ('David Gil', 'david.gil@example.com', '+34600111231'),
+      ('Lucia Navarro', 'lucia.navarro@example.com', '+34600111232'),
+      ('Hugo Molina', 'hugo.molina@example.com', '+34600111233'),
+      ('Claudia Ortega', 'claudia.ortega@example.com', '+34600111234'),
+      ('Daniel Castro', 'daniel.castro@example.com', '+34600111235'),
+      ('Irene Vega', 'irene.vega@example.com', '+34600111236'),
+      ('Alvaro Ramos', 'alvaro.ramos@example.com', '+34600111237'),
+      ('Nerea Santos', 'nerea.santos@example.com', '+34600111238'),
+      ('Adrian Herrera', 'adrian.herrera@example.com', '+34600111239'),
+      ('Paula Medina', 'paula.medina@example.com', '+34600111240'),
+      ('Sergio Blanco', 'sergio.blanco@example.com', '+34600111241');

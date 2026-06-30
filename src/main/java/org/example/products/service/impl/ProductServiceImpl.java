@@ -1,8 +1,8 @@
 package org.example.products.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.products.dto.ProductRequestDto;
-import org.example.products.dto.ProductResponseDto;
+import org.example.products.dto.product.ProductRequestDto;
+import org.example.products.dto.product.ProductResponseDto;
 import org.example.products.entity.Product;
 import org.example.products.exception.ProductNotFoundException;
 import org.example.products.mapper.ProductMapper;

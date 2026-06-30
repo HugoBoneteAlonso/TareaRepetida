@@ -1,6 +1,7 @@
 package org.example.products.mapper;
 
-import org.example.products.dto.OrderLineResponseDto;
+import org.example.products.dto.order.CreateOrderLineRequestDto;
+import org.example.products.dto.order.OrderLineResponseDto;
 import org.example.products.entity.OrderLine;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -15,6 +16,9 @@ public interface OrderLineMapper {
     @Mapping(target = "productName", source = "product.name")
     @Mapping(target = "lineTotal", ignore = true)
     OrderLineResponseDto orderLineToDto(OrderLine orderLine);
+
+    @Mapping(target = "product", ignore = true)
+    OrderLine toEntity (CreateOrderLineRequestDto requestDto);
 
     @AfterMapping
     default void calculateLineTotal(OrderLine source, @MappingTarget OrderLineResponseDto dto) {

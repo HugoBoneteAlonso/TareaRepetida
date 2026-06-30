@@ -46,6 +46,20 @@ public class GlobalExceptionHandler {
                 ex.getMessage(), request.getRequestURI(),UUID.randomUUID());
     }
 
+    @ExceptionHandler(CustomerNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponseDto handleCustomerNotFoundException(CustomerNotFoundException ex, HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 404,"Customer Not Found",
+                ex.getMessage(), request.getRequestURI(),UUID.randomUUID());
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponseDto handleOrderNotFoundException(OrderNotFoundException ex, HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 404,"Order Not Found",
+                ex.getMessage(), request.getRequestURI(),UUID.randomUUID());
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponseDto handleGenericException(Exception ex, HttpServletRequest request) {

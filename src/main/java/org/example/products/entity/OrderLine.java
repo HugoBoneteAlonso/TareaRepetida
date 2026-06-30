@@ -20,7 +20,7 @@ public class OrderLine {
     private Order order;
 
     @ManyToOne
-    private Product productId;
+    private Product product;
 
     @NotNull
     @Min(1)

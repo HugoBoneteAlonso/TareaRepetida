@@ -1,11 +1,12 @@
-package org.example.products.dto;
+package org.example.products.dto.order;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,8 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateOrderRequestDto {
     @NotNull
-    private Long productId;
+    private Long customer;
 
-    @Min(1)
-    private Integer quantity;
+    private List<CreateOrderLineRequestDto> lines;
 }

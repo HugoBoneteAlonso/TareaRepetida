@@ -1,7 +1,7 @@
 package org.example.products.service;
 
-import org.example.products.dto.ProductRequestDto;
-import org.example.products.dto.ProductResponseDto;
+import org.example.products.dto.product.ProductRequestDto;
+import org.example.products.dto.product.ProductResponseDto;
 
 import java.util.List;
 
