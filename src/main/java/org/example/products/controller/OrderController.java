@@ -6,8 +6,12 @@ import org.example.products.dto.order.CreateOrderRequestDto;
 import org.example.products.dto.order.OrderResponseDto;
 import org.example.products.entity.OrderStatus;
 import org.example.products.service.OrderService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -49,5 +53,14 @@ public class OrderController {
     @GetMapping("/customerId")
     public List<OrderResponseDto> getAllOrdersByCustomer(@RequestParam Long id) {
         return service.getAllOrdersByCustomer(id);
+    }
+
+    @GetMapping("/search")
+    public Page<OrderResponseDto> searchOrders(@PageableDefault(size = 20) Pageable pageable,
+                                               @RequestParam(required = false) String name,
+                                               @RequestParam(required = false) OrderStatus status,
+                                               @RequestParam(required = false)LocalDateTime from,
+                                               @RequestParam(required = false) LocalDateTime to) {
+        return service.searchOrders(pageable, name, status, from, to);
     }
 }

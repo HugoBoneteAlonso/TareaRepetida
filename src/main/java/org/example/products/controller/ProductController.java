@@ -5,8 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.example.products.dto.product.ProductRequestDto;
 import org.example.products.dto.product.ProductResponseDto;
 import org.example.products.service.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -15,13 +19,9 @@ import java.util.List;
 public class ProductController {
     private final ProductService service;
 
-    @GetMapping
-    public List<ProductResponseDto> listAllProducts(@RequestParam(required = false) String name) {
-        if(name == null) {
-            return service.getAll();
-        }else {
+    @GetMapping("/name")
+    public List<ProductResponseDto> listAllProductsByName(@RequestParam String name) {
             return service.getAllByName(name);
-        }
     }
 
     @GetMapping("/{id}")
@@ -42,5 +42,18 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id){
         service.delete(id);
+    }
+
+    @GetMapping
+    public Page<ProductResponseDto> findAll(Pageable pageable) {
+        return service.listAll(pageable);
+    }
+
+    @GetMapping("/search")
+    public Page<ProductResponseDto> searchProducts(@PageableDefault(size = 20) Pageable pageable, @RequestParam(required = false) String name,
+                                                   @RequestParam(required = false)BigDecimal minPrice,
+                                                   @RequestParam(required = false) BigDecimal maxPrice,
+                                                   @RequestParam(required = false) Integer minStock) {
+        return service.search(pageable, name, minPrice, maxPrice, minStock);
     }
 }

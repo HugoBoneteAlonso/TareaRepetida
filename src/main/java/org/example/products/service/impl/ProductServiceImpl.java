@@ -7,9 +7,14 @@ import org.example.products.entity.Product;
 import org.example.products.exception.ProductNotFoundException;
 import org.example.products.mapper.ProductMapper;
 import org.example.products.repository.ProductRepository;
+import org.example.products.repository.specification.ProductSpecification;
 import org.example.products.service.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -53,5 +58,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponseDto> getAllByName(String name) {
         return repository.findAllByName(name).stream().map(mapper::toResponseDto).toList();
+    }
+
+    @Override
+    public Page<ProductResponseDto> listAll(Pageable pageable) {
+        return repository.findAll(pageable).map(mapper::toResponseDto);
+    }
+
+    @Override
+    public Page<ProductResponseDto> search(Pageable pageable, String name, BigDecimal minPrice
+            , BigDecimal maxPrice, Integer minStock) {
+        Specification<Product> spec = Specification.where(ProductSpecification.hasNameLike(name))
+                .and(ProductSpecification.hasPriceBetween(minPrice, maxPrice))
+                .and(ProductSpecification.hasStockGreaterThan(minStock));
+
+        return repository.findAll(spec, pageable).map(mapper :: toResponseDto);
     }
 }

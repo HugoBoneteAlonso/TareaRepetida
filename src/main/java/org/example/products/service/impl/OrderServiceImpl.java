@@ -12,9 +12,14 @@ import org.example.products.mapper.OrderMapper;
 import org.example.products.repository.CustomerRepository;
 import org.example.products.repository.OrderRepository;
 import org.example.products.repository.ProductRepository;
+import org.example.products.repository.specification.OrderSpecification;
 import org.example.products.service.OrderService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -91,4 +96,15 @@ public class OrderServiceImpl implements OrderService {
         return repository.findAllByStatus(OrderStatus.valueOf(status)).stream()
                 .map(mapper::orderToOrderDto).toList();
     }
+
+    @Override
+    public Page<OrderResponseDto> searchOrders(Pageable pageable, String name, OrderStatus status, LocalDateTime from, LocalDateTime to) {
+        Specification<Order> spec = Specification.where(OrderSpecification.hasCustomerNameLike(name))
+                .and(OrderSpecification.hasStatus(status))
+                .and(OrderSpecification.createdBetween(from, to));
+
+        return repository.findAll(spec, pageable).map(mapper::orderToOrderDto);
+    }
+
+
 }
