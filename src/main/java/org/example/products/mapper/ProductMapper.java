@@ -12,8 +12,10 @@ public interface ProductMapper {
     ProductResponseDto toResponseDto(Product product);
 
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "category", ignore = true)
     Product toEntity(ProductRequestDto dto);
 
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "category", ignore = true)
     void updateEntityFromDto(ProductRequestDto dto, @MappingTarget Product product);
 }

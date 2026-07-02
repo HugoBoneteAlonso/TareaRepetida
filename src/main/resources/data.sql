@@ -52,3 +52,18 @@ INSERT INTO customer (name, email, phone) VALUES
       ('Adrian Herrera', 'adrian.herrera@example.com', '+34600111239'),
       ('Paula Medina', 'paula.medina@example.com', '+34600111240'),
       ('Sergio Blanco', 'sergio.blanco@example.com', '+34600111241');
+
+
+INSERT INTO category (name) VALUES
+                                    ( 'Televisores'),
+                                    ( 'Ordenadores'),
+                                    ( 'Smartphones'),
+                                    ( 'Audio'),
+                                    ( 'Monitores'),
+                                    ( 'Perifericos'),
+                                    ( 'Tablets'),
+                                    ( 'Consolas'),
+                                    ( 'Fotografia'),
+                                    ( 'Componentes'),
+                                    ( 'Mobiliario'),
+                                    ( 'Redes');

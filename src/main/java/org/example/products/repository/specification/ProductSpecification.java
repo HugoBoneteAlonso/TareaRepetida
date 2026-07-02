@@ -32,4 +32,9 @@ public class ProductSpecification {
                 min == null ? null :
                         cb.greaterThanOrEqualTo(root.get("stock"), min);
     }
+
+    public static Specification<Product> hasCategoryLike(Long category) {
+        return (root, query, cb) ->
+            category == null ? null : cb.equal(root.get("category").get("id"), category);
+    }
 }

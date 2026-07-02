@@ -4,13 +4,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.products.dto.product.ProductRequestDto;
 import org.example.products.dto.product.ProductResponseDto;
+import org.example.products.dto.product.ProductSearchCriteriaDto;
 import org.example.products.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -50,10 +50,8 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public Page<ProductResponseDto> searchProducts(@PageableDefault(size = 20) Pageable pageable, @RequestParam(required = false) String name,
-                                                   @RequestParam(required = false)BigDecimal minPrice,
-                                                   @RequestParam(required = false) BigDecimal maxPrice,
-                                                   @RequestParam(required = false) Integer minStock) {
-        return service.search(pageable, name, minPrice, maxPrice, minStock);
+    public Page<ProductResponseDto> searchProducts(@PageableDefault(size = 20) Pageable pageable
+            , @ModelAttribute ProductSearchCriteriaDto dto) {
+        return service.search(pageable, dto);
     }
 }

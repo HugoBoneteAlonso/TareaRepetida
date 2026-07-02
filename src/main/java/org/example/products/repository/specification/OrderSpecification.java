@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.time.LocalDateTime;
 
 public class OrderSpecification {
-    public static final String orderDate = "orderDate";
+    public static final String ORDER_DATE = "orderDate";
 
     public static Specification<Order> hasCustomerNameLike(String name) {
         return (root, query, cb) -> {
@@ -28,12 +28,12 @@ public class OrderSpecification {
         return (root, query, cb) -> {
             if(from == null && to == null) return null;
             if(from != null && to != null) {
-                return cb.between(root.get(orderDate), from, to);
+                return cb.between(root.get(ORDER_DATE), from, to);
             }
             if(from != null) {
-                return cb.greaterThanOrEqualTo(root.get(orderDate), from);
+                return cb.greaterThanOrEqualTo(root.get(ORDER_DATE), from);
             }
-            return cb.lessThanOrEqualTo(root.get(orderDate), to);
+            return cb.lessThanOrEqualTo(root.get(ORDER_DATE), to);
         };
     }
 }

@@ -18,6 +18,7 @@ public interface OrderMapper {
     @Mapping(target = "totalAmount", ignore = true)
     OrderResponseDto orderToOrderDto(Order order);
 
+    @Mapping(target = "customer", ignore = true)
     Order toEntity(CreateOrderRequestDto dto);
     @AfterMapping
     default void calculateTotalAmount(Order source, @MappingTarget OrderResponseDto dto) {

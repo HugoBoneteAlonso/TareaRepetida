@@ -41,4 +41,8 @@ public class Product {
     @Column(name = "created_at")
     @CreatedDate
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

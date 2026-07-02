@@ -25,4 +25,6 @@ public class ProductResponseDto {
     private Integer stock;
 
     private LocalDateTime createdAt;
+
+    private CategoryResponseDto category;
 }

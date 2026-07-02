@@ -29,4 +29,7 @@ public class ProductRequestDto {
     @PositiveOrZero(message = "El stock debe ser igual o mayor a 0")
     @NotNull(message = "El stock no puede ser nulo")
     private Integer stock;
+
+    @NotNull
+    private Long category;
 }

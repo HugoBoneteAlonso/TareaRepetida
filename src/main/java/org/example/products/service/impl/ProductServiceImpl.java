@@ -3,9 +3,12 @@ package org.example.products.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.products.dto.product.ProductRequestDto;
 import org.example.products.dto.product.ProductResponseDto;
+import org.example.products.dto.product.ProductSearchCriteriaDto;
+import org.example.products.entity.Category;
 import org.example.products.entity.Product;
 import org.example.products.exception.ProductNotFoundException;
 import org.example.products.mapper.ProductMapper;
+import org.example.products.repository.CategoryRepository;
 import org.example.products.repository.ProductRepository;
 import org.example.products.repository.specification.ProductSpecification;
 import org.example.products.service.ProductService;
@@ -14,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -23,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
     private final ProductMapper mapper;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<ProductResponseDto> getAll() {
@@ -36,7 +39,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto create(ProductRequestDto dto) {
+        Category category = categoryRepository.findById(dto.getCategory())
+                .orElseThrow();
         Product toCreate = mapper.toEntity(dto);
+        toCreate.setCategory(category);
+
         repository.save(toCreate);
         return mapper.toResponseDto(toCreate);
     }
@@ -44,6 +51,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDto update(Long id, ProductRequestDto dto) {
         Product toUpdate = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        Category category = categoryRepository.findById(dto.getCategory())
+                .orElseThrow();
+        toUpdate.setCategory(category);
         mapper.updateEntityFromDto(dto, toUpdate);
         repository.save(toUpdate);
         return mapper.toResponseDto(toUpdate);
@@ -66,11 +76,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductResponseDto> search(Pageable pageable, String name, BigDecimal minPrice
-            , BigDecimal maxPrice, Integer minStock) {
-        Specification<Product> spec = Specification.where(ProductSpecification.hasNameLike(name))
-                .and(ProductSpecification.hasPriceBetween(minPrice, maxPrice))
-                .and(ProductSpecification.hasStockGreaterThan(minStock));
+    public Page<ProductResponseDto> search(Pageable pageable, ProductSearchCriteriaDto dto) {
+        Specification<Product> spec = Specification.where(ProductSpecification.hasNameLike(dto.getName()))
+                .and(ProductSpecification.hasPriceBetween(dto.getMinPrice(), dto.getMaxPrice()))
+                .and(ProductSpecification.hasStockGreaterThan(dto.getMinStock()))
+                .and(ProductSpecification.hasCategoryLike(dto.getCategory()));
 
         return repository.findAll(spec, pageable).map(mapper :: toResponseDto);
     }
