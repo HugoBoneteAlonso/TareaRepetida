@@ -362,6 +362,838 @@
 ]
 ```
 
+### GET Products Pageable Size and Page
+```
+    http://localhost:8080/api/v1/products?page=0&size=5
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Producto actualizado",
+      "description": "Descripcion 2",
+      "price": 13.02,
+      "stock": 22,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": {
+        "id": 1,
+        "name": "Televisores"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Laptop Lenovo ThinkPad",
+      "description": "Laptop empresarial 16GB RAM",
+      "price": 899.99,
+      "stock": 10,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 3,
+      "name": "iPhone 14",
+      "description": "Apple smartphone 128GB",
+      "price": 999.99,
+      "stock": 20,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 4,
+      "name": "Auriculares Sony WH-1000XM5",
+      "description": "Auriculares inalámbricos con cancelación de ruido",
+      "price": 299.99,
+      "stock": 25,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 5,
+      "name": "Monitor LG 27\"",
+      "description": "Monitor IPS Full HD",
+      "price": 179.99,
+      "stock": 12,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 5,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalPages": 6,
+  "totalElements": 30,
+  "first": true,
+  "numberOfElements": 5,
+  "size": 5,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "empty": false
+}
+```
+
+### GET Products Price Between
+```
+    http://localhost:8080/api/v1/products/search?minPrice=10&maxPrice=50
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Producto actualizado",
+      "description": "Descripcion 2",
+      "price": 13.02,
+      "stock": 22,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": {
+        "id": 1,
+        "name": "Televisores"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Ratón Logitech G502",
+      "description": "Ratón gaming inalámbrico",
+      "price": 49.99,
+      "stock": 40,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 24,
+      "name": "Memoria USB Kingston 128GB",
+      "description": "Pendrive USB 3.2",
+      "price": 24.99,
+      "stock": 60,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 3,
+  "first": true,
+  "numberOfElements": 3,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "empty": false
+}
+```
+
+### GET Products Name And Price Between
+```
+    http://localhost:8080/api/v1/products/search?name=tel&minPrice=10
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 26,
+      "name": "Procesador Intel Core i7",
+      "description": "CPU Intel de 14ª generación",
+      "price": 389.99,
+      "stock": 17,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 31,
+      "name": "tel",
+      "description": "desc",
+      "price": 100.00,
+      "stock": 10,
+      "createdAt": "2026-07-02T13:17:30.599307",
+      "category": {
+        "id": 2,
+        "name": "Ordenadores"
+      }
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 2,
+  "first": true,
+  "numberOfElements": 2,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "empty": false
+}
+```
+
+### GET Products No Filter
+```
+    http://localhost:8080/api/v1/products/search
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Producto actualizado",
+      "description": "Descripcion 2",
+      "price": 13.02,
+      "stock": 22,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": {
+        "id": 1,
+        "name": "Televisores"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Laptop Lenovo ThinkPad",
+      "description": "Laptop empresarial 16GB RAM",
+      "price": 899.99,
+      "stock": 10,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 3,
+      "name": "iPhone 14",
+      "description": "Apple smartphone 128GB",
+      "price": 999.99,
+      "stock": 20,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 4,
+      "name": "Auriculares Sony WH-1000XM5",
+      "description": "Auriculares inalámbricos con cancelación de ruido",
+      "price": 299.99,
+      "stock": 25,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 5,
+      "name": "Monitor LG 27\"",
+      "description": "Monitor IPS Full HD",
+      "price": 179.99,
+      "stock": 12,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 6,
+      "name": "Teclado Mecánico RGB",
+      "description": "Teclado gaming con switches rojos",
+      "price": 79.99,
+      "stock": 30,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 7,
+      "name": "Ratón Logitech G502",
+      "description": "Ratón gaming inalámbrico",
+      "price": 49.99,
+      "stock": 40,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 8,
+      "name": "Tablet Samsung Galaxy Tab",
+      "description": "Tablet Android de 10 pulgadas",
+      "price": 249.99,
+      "stock": 18,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 9,
+      "name": "PlayStation 5",
+      "description": "Consola de nueva generación",
+      "price": 549.99,
+      "stock": 5,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 10,
+      "name": "Xbox Series X",
+      "description": "Consola Microsoft de alto rendimiento",
+      "price": 499.99,
+      "stock": 7,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 11,
+      "name": "Cámara Canon EOS",
+      "description": "Cámara réflex digital",
+      "price": 799.99,
+      "stock": 6,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 12,
+      "name": "Smartwatch Xiaomi Band",
+      "description": "Reloj inteligente deportivo",
+      "price": 69.99,
+      "stock": 35,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 13,
+      "name": "Altavoz JBL Flip",
+      "description": "Altavoz portátil Bluetooth",
+      "price": 89.99,
+      "stock": 22,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 14,
+      "name": "Disco SSD Samsung 1TB",
+      "description": "Almacenamiento SSD NVMe",
+      "price": 109.99,
+      "stock": 50,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 15,
+      "name": "Router TP-Link AX1800",
+      "description": "Router WiFi de alta velocidad",
+      "price": 59.99,
+      "stock": 28,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 16,
+      "name": "MacBook Air M3",
+      "description": "Portátil Apple ultraligero",
+      "price": 1299.99,
+      "stock": 8,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 17,
+      "name": "iPad Air",
+      "description": "Tablet Apple de alto rendimiento",
+      "price": 699.99,
+      "stock": 14,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 18,
+      "name": "Samsung Galaxy S24",
+      "description": "Smartphone Android gama alta",
+      "price": 1099.99,
+      "stock": 16,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 19,
+      "name": "Nintendo Switch OLED",
+      "description": "Consola híbrida portátil",
+      "price": 349.99,
+      "stock": 11,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 21,
+      "name": "Webcam Logitech C920",
+      "description": "Webcam Full HD para videollamadas",
+      "price": 79.99,
+      "stock": 26,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalPages": 2,
+  "totalElements": 30,
+  "first": true,
+  "numberOfElements": 20,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "empty": false
+}
+```
+
+### GET Orders with Filter
+```
+    http://localhost:8080/api/v1/orders/search?status=CONFIRMED&customerName=ana
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "orderDate": "2026-07-02T13:19:58.208604",
+      "status": "CONFIRMED",
+      "customer": {
+        "id": 21,
+        "name": "ana",
+        "email": "ana.persae982@example.com",
+        "totalOrders": null,
+        "totalSpent": null
+      },
+      "lines": [
+        {
+          "id": 3,
+          "productId": 3,
+          "productName": "iPhone 14",
+          "quantity": 1,
+          "unitPrice": 999.99,
+          "lineTotal": 999.99
+        },
+        {
+          "id": 4,
+          "productId": 12,
+          "productName": "Smartwatch Xiaomi Band",
+          "quantity": 5,
+          "unitPrice": 69.99,
+          "lineTotal": 349.95
+        }
+      ],
+      "totalAmount": 1349.94
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 1,
+  "first": true,
+  "numberOfElements": 1,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "empty": false
+}
+```
+
+### GET Orders with Date Filter
+```
+    http://localhost:8080/api/v1/orders/search?from=2024-01-01T00:00:00
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "orderDate": "2026-07-02T13:19:58.208604",
+      "status": "CONFIRMED",
+      "customer": {
+        "id": 21,
+        "name": "ana",
+        "email": "ana.persae982@example.com",
+        "totalOrders": null,
+        "totalSpent": null
+      },
+      "lines": [
+        {
+          "id": 3,
+          "productId": 3,
+          "productName": "iPhone 14",
+          "quantity": 1,
+          "unitPrice": 999.99,
+          "lineTotal": 999.99
+        },
+        {
+          "id": 4,
+          "productId": 12,
+          "productName": "Smartwatch Xiaomi Band",
+          "quantity": 5,
+          "unitPrice": 69.99,
+          "lineTotal": 349.95
+        }
+      ],
+      "totalAmount": 1349.94
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 1,
+  "first": true,
+  "numberOfElements": 1,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "empty": false
+}
+```
+
+### GET Products By Category
+```
+    hhttp://localhost:8080/api/v1/products/search?category=1
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Producto actualizado",
+      "description": "Descripcion 2",
+      "price": 13.02,
+      "stock": 22,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": {
+        "id": 1,
+        "name": "Televisores"
+      }
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 1,
+  "first": true,
+  "numberOfElements": 1,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "empty": false
+}
+```
+
+### GET Products By Multiple Sorting
+```
+    http://localhost:8080/api/v1/products/search?sort=price,desc&sort=name,asc
+```
+***Response***
+```json
+{
+  "content": [
+    {
+      "id": 16,
+      "name": "MacBook Air M3",
+      "description": "Portátil Apple ultraligero",
+      "price": 1299.99,
+      "stock": 8,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 18,
+      "name": "Samsung Galaxy S24",
+      "description": "Smartphone Android gama alta",
+      "price": 1099.99,
+      "stock": 16,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 3,
+      "name": "iPhone 14",
+      "description": "Apple smartphone 128GB",
+      "price": 999.99,
+      "stock": 20,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 2,
+      "name": "Laptop Lenovo ThinkPad",
+      "description": "Laptop empresarial 16GB RAM",
+      "price": 899.99,
+      "stock": 10,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 11,
+      "name": "Cámara Canon EOS",
+      "description": "Cámara réflex digital",
+      "price": 799.99,
+      "stock": 6,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 25,
+      "name": "Tarjeta Gráfica RTX 4070",
+      "description": "GPU NVIDIA para gaming y edición",
+      "price": 699.99,
+      "stock": 9,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 17,
+      "name": "iPad Air",
+      "description": "Tablet Apple de alto rendimiento",
+      "price": 699.99,
+      "stock": 14,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 9,
+      "name": "PlayStation 5",
+      "description": "Consola de nueva generación",
+      "price": 549.99,
+      "stock": 5,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 10,
+      "name": "Xbox Series X",
+      "description": "Consola Microsoft de alto rendimiento",
+      "price": 499.99,
+      "stock": 7,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 26,
+      "name": "Procesador Intel Core i7",
+      "description": "CPU Intel de 14ª generación",
+      "price": 389.99,
+      "stock": 17,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 30,
+      "name": "Escritorio Elevable",
+      "description": "Mesa regulable en altura",
+      "price": 349.99,
+      "stock": 6,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 19,
+      "name": "Nintendo Switch OLED",
+      "description": "Consola híbrida portátil",
+      "price": 349.99,
+      "stock": 11,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 4,
+      "name": "Auriculares Sony WH-1000XM5",
+      "description": "Auriculares inalámbricos con cancelación de ruido",
+      "price": 299.99,
+      "stock": 25,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 29,
+      "name": "Silla Gaming DXRacer",
+      "description": "Silla ergonómica ajustable",
+      "price": 299.99,
+      "stock": 7,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 8,
+      "name": "Tablet Samsung Galaxy Tab",
+      "description": "Tablet Android de 10 pulgadas",
+      "price": 249.99,
+      "stock": 18,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 27,
+      "name": "Placa Base ASUS Prime",
+      "description": "Compatible con Intel DDR5",
+      "price": 199.99,
+      "stock": 15,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 5,
+      "name": "Monitor LG 27\"",
+      "description": "Monitor IPS Full HD",
+      "price": 179.99,
+      "stock": 12,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 22,
+      "name": "Micrófono HyperX QuadCast",
+      "description": "Micrófono USB para streaming",
+      "price": 139.99,
+      "stock": 19,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 28,
+      "name": "Fuente Corsair 750W",
+      "description": "Fuente certificada 80 Plus Gold",
+      "price": 119.99,
+      "stock": 20,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    },
+    {
+      "id": 14,
+      "name": "Disco SSD Samsung 1TB",
+      "description": "Almacenamiento SSD NVMe",
+      "price": 109.99,
+      "stock": 50,
+      "createdAt": "2026-07-02T13:15:59.131754",
+      "category": null
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalPages": 2,
+  "totalElements": 30,
+  "first": true,
+  "numberOfElements": 20,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": false,
+    "sorted": true,
+    "unsorted": false
+  },
+  "empty": false
+}
+```
+
 ##  Enlaces usados para la Tarea
 https://stackoverflow.com/questions/60279760/how-to-generate-a-createddate-localdatetime-as-timestamp  
 https://stackoverflow.com/questions/49954812/how-can-you-make-a-created-at-column-generate-the-creation-date-time-automatical  

@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerSummaryDto createCustomer(CustomerRequestDto request) {
         Customer toCreate = mapper.toEntity(request);
         Customer saved = repository.save(toCreate);
-        return mapper.customerToDto(saved);
+        return customerDataUpdater(saved);
     }
 
     private CustomerSummaryDto customerDataUpdater(Customer data) {
