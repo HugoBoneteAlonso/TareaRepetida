@@ -1,6 +1,7 @@
 package org.example.empresa.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
 import org.example.empresa.dto.order.CreateOrderLineRequestDto;
 import org.example.empresa.dto.order.CreateOrderRequestDto;
@@ -9,6 +10,8 @@ import org.example.empresa.repository.CategoryRepository;
 import org.example.empresa.repository.CustomerRepository;
 import org.example.empresa.repository.OrderRepository;
 import org.example.empresa.repository.ProductRepository;
+import org.hibernate.SessionFactory;
+import org.hibernate.stat.Statistics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,8 +53,10 @@ class OrderControllerIntegrationTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
+
     private Product existingProduct;
-    private Category existingCategory;
     private Customer existingCustomer;
     private Order existingOrder;
 
@@ -59,15 +65,20 @@ class OrderControllerIntegrationTest {
         existingCustomer = customerRepository.save(new Customer(null, "Juan Perez",
                 "juan@gmail.com", "600123123"));
 
-        existingCategory = categoryRepository.save(new Category(null, "Electronica"));
+        Category existingCategory = categoryRepository.save(new Category(null, "Electronica"));
 
         existingProduct = productRepository.save(
                 new Product(null, "Mouse", "Mouse inalambrico", new BigDecimal("25.99"),
                         50, null, existingCategory));
 
-        existingOrder = new Order(null, null, OrderStatus.PENDING, existingCustomer,
-                new ArrayList<>(List.of(new OrderLine(null, null, existingProduct, 2, existingProduct.getPrice()),
-                        new OrderLine(null, null, existingProduct, 2, existingProduct.getPrice()))));
+        existingOrder = new Order(null, null, OrderStatus.PENDING, existingCustomer,new ArrayList<>());
+
+        OrderLine line1 = new OrderLine(null, existingOrder, existingProduct, 2, existingProduct.getPrice());
+        OrderLine line2 = new OrderLine(null, existingOrder, existingProduct, 2, existingProduct.getPrice());
+
+        existingOrder.addLine(line1);
+        existingOrder.addLine(line2);
+
         existingOrder = repository.save(existingOrder);
     }
 
@@ -141,8 +152,58 @@ class OrderControllerIntegrationTest {
     @Test
     void shouldFilterOrdersByStatusAndDateRange() throws Exception {
         mockMvc.perform(get("/api/v1/orders/search?status=" + existingOrder.getStatus() +
-                "&from=2026-01-01T00:00:00&to=" + existingOrder.getOrderDate()))
+                "&from=2026-01-01T00:00:00&to=2029-01-01T00:00:00"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id").value(existingOrder.getId()));
     }
+
+    @Test
+    void shouldGetAllOrders() throws Exception{
+        mockMvc.perform(get("/api/v1/orders"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(existingOrder.getId()));
+    }
+
+    @Test
+    void shouldGetAllOrdersByStatus() throws Exception{
+        mockMvc.perform(get("/api/v1/orders/status?status=PENDING"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(existingOrder.getId()));
+    }
+
+    @Test
+    void shouldDeleteOrder() throws Exception {
+        mockMvc.perform(delete("/api/v1/orders/" + existingOrder.getId()))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void shouldReturn404WhenNotFoundOrder() throws Exception {
+        mockMvc.perform(delete("/api/v1/orders/9999"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturn500WhenNotFoundOrder() throws Exception {
+        existingOrder.setStatus(OrderStatus.SHIPPED);
+        mockMvc.perform(delete("/api/v1/orders/" + existingOrder.getId()))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+
+    void shouldNotHaveNPlusOneProblem() throws Exception {
+        SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        Statistics statistics = sessionFactory.getStatistics();
+
+        statistics.clear();
+
+        mockMvc.perform(get("/api/v1/orders"))
+                .andExpect(status().isOk());
+
+        long totalQueries = statistics.getPrepareStatementCount();
+
+        assertEquals(1, totalQueries);
+    }
+
 }

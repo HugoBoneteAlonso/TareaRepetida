@@ -58,7 +58,7 @@ class ProductControllerIntegrationTest {
     void shouldCreateProductSuccessfully() throws Exception{
         //Given
         ProductRequestDto request = new ProductRequestDto("Mouse",
-                "Mouse inalambrico",new BigDecimal("25.00"),
+                "Mouse inalambrico",new BigDecimal("25.99"),
                 50, existingCategory.getId());
 
         //When + Then
