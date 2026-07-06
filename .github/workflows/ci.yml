@@ -8,8 +8,8 @@ on:
 
   pull_request:
     branches:
-      - main
-      - develop
+      - master
+      - feature/tarea-05-tests
 
 jobs:
   build:
