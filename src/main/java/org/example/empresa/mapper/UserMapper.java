@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    @Mapping(target = "password", ignore = true)
     UserResponseDto toDto(User user);
 
     @Mapping(target = "enabled", ignore = true)

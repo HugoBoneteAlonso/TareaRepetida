@@ -10,6 +10,15 @@
     mvn spring-boot:run
 ```
 
+##  Ejecutar los tests
+
+- *Se utiliza el comando:*
+```
+    mvn clean test  
+```
+
+- *Para comprobar la cobertura hay que dirigirse a "target/site/jacoco/index.html" dentro del proyecto*
+
 ##  Ejemplos de llamadas a la API desde Postman
 
 ### GET All Products
