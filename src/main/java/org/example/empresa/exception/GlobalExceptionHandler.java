@@ -8,6 +8,7 @@ import org.example.empresa.dto.error.ValidationErrorResponseDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -102,5 +103,13 @@ public class GlobalExceptionHandler {
             , HttpServletRequest request) {
         return new ErrorResponseDto(LocalDateTime.now(), 409, BAD_REQUEST,
                 "Ya existe un producto con este nombre", request.getRequestURI(), UUID.randomUUID());
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponseDto handleUsernameNotFoundException(UsernameNotFoundException ex
+            , HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 401, "Unauthorized",
+                ex.getMessage(), request.getRequestURI(), UUID.randomUUID());
     }
 }
