@@ -1,10 +1,7 @@
-package org.example.empresa.service.impl;
+package org.example.empresa.service;
 
 import lombok.AllArgsConstructor;
-import org.example.empresa.dto.security.AuthResponseDto;
-import org.example.empresa.dto.security.LoginRequestDto;
-import org.example.empresa.dto.security.RegisterRequestDto;
-import org.example.empresa.dto.security.UserResponseDto;
+import org.example.empresa.dto.security.*;
 import org.example.empresa.entity.Role;
 import org.example.empresa.entity.User;
 import org.example.empresa.mapper.UserMapper;
@@ -22,6 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserMapper mapper;
     private final JwtService jwtService;
     private final PasswordEncoder encoder;
+    private final LoginRateLimiter rateLimiter;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,22 +32,44 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public UserResponseDto createUser(RegisterRequestDto dto) {
-        dto.setPassword(encoder.encode(dto.getPassword()));
         User toCreate = mapper.registerToEntity(dto);
+        toCreate.setPassword(encoder.encode(dto.getPassword()));
         toCreate.setRole(Role.USER);
         User saved = repository.save(toCreate);
 
         return mapper.toDto(saved);
     }
 
-    public AuthResponseDto loginUser(LoginRequestDto request) {
-        User user = repository.findByEmail(request.getEmail());
+    public AuthResponseDto loginUser(LoginRequestDto dto, String ip) {
+        rateLimiter.checkLimit(ip);
 
-        if(user != null && encoder.matches(request.getPassword(), user.getPassword())) {
+        User user = repository.findByEmail(dto.getEmail());
+
+        if(user != null && encoder.matches(dto.getPassword(), user.getPassword())) {
             String token = jwtService.generateToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
             Long expiresIn = jwtService.extractExpiration(token).getTime() - System.currentTimeMillis();
-            return new AuthResponseDto(token, expiresIn);
+            return new AuthResponseDto(token, expiresIn, refreshToken);
         }
+        rateLimiter.failedAttempt(ip);
         throw new UsernameNotFoundException("Email o contraseña incorrectos");
+    }
+
+    public UserResponseDto getMyUser(String email) {
+        return mapper.toDto(repository.findByEmail(email));
+    }
+
+    public AuthResponseDto refreshLogin(RefreshTokenRequestDto dto) {
+        String refreshToken = dto.getRefreshToken();
+        User user = repository.findByEmail(jwtService.extractUsername(refreshToken));
+
+        if(user == null) {
+            throw new UsernameNotFoundException("Email o contraseña incorrectos");
+        }
+
+        String token = jwtService.generateToken(user);
+        Long expiresIn = jwtService.extractExpiration(token).getTime() - System.currentTimeMillis();
+
+        return new AuthResponseDto(token, expiresIn, refreshToken);
     }
 }

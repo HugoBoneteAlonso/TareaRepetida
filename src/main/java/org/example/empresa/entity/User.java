@@ -2,7 +2,9 @@ package org.example.empresa.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +17,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @Setter
+@Getter
 @NoArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
@@ -29,6 +32,7 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
+    @NotNull
     private Role role;
 
     private boolean enabled;

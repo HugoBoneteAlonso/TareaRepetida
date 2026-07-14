@@ -1,5 +1,6 @@
 package org.example.empresa.exception;
 
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.example.empresa.dto.error.ErrorResponseDto;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -111,5 +113,31 @@ public class GlobalExceptionHandler {
             , HttpServletRequest request) {
         return new ErrorResponseDto(LocalDateTime.now(), 401, "Unauthorized",
                 ex.getMessage(), request.getRequestURI(), UUID.randomUUID());
+    }
+
+    @ExceptionHandler(TooManyRequestsException.class)
+    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+    public ErrorResponseDto handleTooManyRequestsException(TooManyRequestsException ex
+            , HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 429, "Too many requests",
+                ex.getMessage(), request.getRequestURI(), UUID.randomUUID());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponseDto handleAccessDeniedException(AccessDeniedException ex
+            , HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 403, "Forbidden",
+                ex.getMessage(), request.getRequestURI(), UUID.randomUUID());
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponseDto handleSignatureException(
+            SignatureException ex,
+            HttpServletRequest request) {
+
+        return new ErrorResponseDto(LocalDateTime.now(), 401, "Unauthorized",
+                "Token inválido", request.getRequestURI(), UUID.randomUUID());
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,12 +31,14 @@ public class ProductController {
         return service.getById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResponseDto createProduct(@Valid @RequestBody ProductRequestDto dto) {
         return service.create(dto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ProductResponseDto updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequestDto dto) {
         return service.update(id, dto);
@@ -47,6 +50,7 @@ public class ProductController {
         service.delete(id);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public Page<ProductResponseDto> findAll(Pageable pageable) {
         return service.listAll(pageable);
