@@ -1,14 +1,14 @@
 package org.example.empresa.mapper;
 
-import org.example.empresa.dto.product.ProductRequestDto;
-import org.example.empresa.dto.product.ProductResponseDto;
+import org.example.empresa.dto.product.v1.ProductRequestDto;
+import org.example.empresa.dto.product.v1.ProductResponseDto;
 import org.example.empresa.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface ProductMapper {
+public interface ProductMapperV1 {
     ProductResponseDto toResponseDto(Product product);
 
     @Mapping(target = "createdAt", ignore = true)

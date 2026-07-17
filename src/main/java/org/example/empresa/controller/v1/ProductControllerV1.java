@@ -1,10 +1,10 @@
-package org.example.empresa.controller;
+package org.example.empresa.controller.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.empresa.dto.product.ProductRequestDto;
-import org.example.empresa.dto.product.ProductResponseDto;
-import org.example.empresa.dto.product.ProductSearchCriteriaDto;
+import org.example.empresa.dto.product.v1.ProductRequestDto;
+import org.example.empresa.dto.product.v1.ProductResponseDto;
+import org.example.empresa.dto.product.v1.ProductSearchCriteriaDto;
 import org.example.empresa.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
-public class ProductController {
+public class ProductControllerV1 {
     private final ProductService service;
 
     @GetMapping("/name")

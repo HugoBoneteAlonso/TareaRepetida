@@ -1,6 +1,6 @@
 package org.example.empresa.product.service;
 
-import org.example.empresa.controller.ProductController;
+import org.example.empresa.controller.v1.ProductControllerV1;
 import org.example.empresa.exception.ProductNotFoundException;
 import org.example.empresa.service.ProductService;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProductController.class)
+@WebMvcTest(ProductControllerV1.class)
 class ProductControllerTest {
 
     @Autowired

@@ -2,7 +2,7 @@ package org.example.empresa.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import org.example.empresa.dto.product.ProductRequestDto;
+import org.example.empresa.dto.product.v1.ProductRequestDto;
 import org.example.empresa.entity.Category;
 import org.example.empresa.entity.Product;
 import org.example.empresa.repository.CategoryRepository;

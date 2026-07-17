@@ -1,4 +1,4 @@
-package org.example.empresa.dto.product;
+package org.example.empresa.dto.product.v1;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

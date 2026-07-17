@@ -2,7 +2,7 @@
 
     import com.fasterxml.jackson.databind.ObjectMapper;
     import jakarta.transaction.Transactional;
-    import org.example.empresa.dto.product.ProductRequestDto;
+    import org.example.empresa.dto.product.v1.ProductRequestDto;
     import org.example.empresa.dto.security.LoginRequestDto;
     import org.example.empresa.dto.security.RegisterRequestDto;
     import org.example.empresa.entity.Role;

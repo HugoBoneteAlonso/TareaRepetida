@@ -1,13 +1,13 @@
 package org.example.empresa.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.empresa.dto.product.ProductRequestDto;
-import org.example.empresa.dto.product.ProductResponseDto;
-import org.example.empresa.dto.product.ProductSearchCriteriaDto;
+import org.example.empresa.dto.product.v1.ProductRequestDto;
+import org.example.empresa.dto.product.v1.ProductResponseDto;
+import org.example.empresa.dto.product.v1.ProductSearchCriteriaDto;
 import org.example.empresa.entity.Category;
 import org.example.empresa.entity.Product;
 import org.example.empresa.exception.ProductNotFoundException;
-import org.example.empresa.mapper.ProductMapper;
+import org.example.empresa.mapper.ProductMapperV1;
 import org.example.empresa.repository.CategoryRepository;
 import org.example.empresa.repository.ProductRepository;
 import org.example.empresa.repository.specification.ProductSpecification;
@@ -24,7 +24,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
-    private final ProductMapper mapper;
+    private final ProductMapperV1 mapper;
     private final CategoryRepository categoryRepository;
 
     @Override

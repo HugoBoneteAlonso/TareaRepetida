@@ -1,9 +1,9 @@
-package org.example.empresa.dto.product;
+package org.example.empresa.dto.product.v2;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.empresa.dto.product.v1.CategoryResponseDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,20 +11,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class ProductResponseDto {
-
-    private Long id;
-
+public class ProductResponseDtoV2 {
+    private BigDecimal id;
     private String name;
-
     private String description;
-
-    private BigDecimal price;
-
     private Integer stock;
-
     private LocalDateTime createdAt;
-
     private CategoryResponseDto category;
+    private MoneyDto price;
 }

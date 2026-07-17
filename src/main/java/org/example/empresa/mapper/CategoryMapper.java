@@ -1,7 +1,7 @@
 package org.example.empresa.mapper;
 
-import org.example.empresa.dto.product.CategoryRequestDto;
-import org.example.empresa.dto.product.CategoryResponseDto;
+import org.example.empresa.dto.product.v1.CategoryRequestDto;
+import org.example.empresa.dto.product.v1.CategoryResponseDto;
 import org.example.empresa.entity.Category;
 import org.mapstruct.Mapper;
 

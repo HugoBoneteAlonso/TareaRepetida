@@ -1,8 +1,8 @@
 package org.example.empresa.service;
 
-import org.example.empresa.dto.product.ProductRequestDto;
-import org.example.empresa.dto.product.ProductResponseDto;
-import org.example.empresa.dto.product.ProductSearchCriteriaDto;
+import org.example.empresa.dto.product.v1.ProductRequestDto;
+import org.example.empresa.dto.product.v1.ProductResponseDto;
+import org.example.empresa.dto.product.v1.ProductSearchCriteriaDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
