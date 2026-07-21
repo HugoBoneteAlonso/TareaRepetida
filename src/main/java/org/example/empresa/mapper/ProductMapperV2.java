@@ -8,6 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {CategoryMapper.class})
 public interface ProductMapperV2 {
     @Mapping(target = "price", expression =
-            "java(new MoneyDTO(product.getPrice(), \"EUR\"))")
+            "java(new MoneyDto(product.getPrice(), \"EUR\"))")
     ProductResponseDtoV2 toResponseDTO(Product product);
 }

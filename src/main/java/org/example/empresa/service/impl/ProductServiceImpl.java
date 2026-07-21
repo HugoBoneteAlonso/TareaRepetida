@@ -2,7 +2,6 @@ package org.example.empresa.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.empresa.dto.product.v1.ProductRequestDto;
-import org.example.empresa.dto.product.v1.ProductResponseDto;
 import org.example.empresa.dto.product.v1.ProductSearchCriteriaDto;
 import org.example.empresa.entity.Category;
 import org.example.empresa.entity.Product;
@@ -28,35 +27,33 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<ProductResponseDto> getAll() {
-        return repository.findAll().stream().map(mapper::toResponseDto).toList();
+    public List<Product> getAll() {
+        return repository.findAll();
     }
 
     @Override
-    public ProductResponseDto getById(Long id) {
-        return repository.findById(id).map(mapper::toResponseDto).orElseThrow(() -> new ProductNotFoundException(id));
+    public Product getById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @Override
-    public ProductResponseDto create(ProductRequestDto dto) {
+    public Product create(ProductRequestDto dto) {
         Category category = categoryRepository.findById(dto.getCategory())
                 .orElseThrow();
         Product toCreate = mapper.toEntity(dto);
         toCreate.setCategory(category);
 
-        repository.save(toCreate);
-        return mapper.toResponseDto(toCreate);
+        return repository.save(toCreate);
     }
 
     @Override
-    public ProductResponseDto update(Long id, ProductRequestDto dto) {
+    public Product update(Long id, ProductRequestDto dto) {
         Product toUpdate = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         Category category = categoryRepository.findById(dto.getCategory())
                 .orElseThrow();
         toUpdate.setCategory(category);
         mapper.updateEntityFromDto(dto, toUpdate);
-        repository.save(toUpdate);
-        return mapper.toResponseDto(toUpdate);
+        return repository.save(toUpdate);
     }
 
     @Override
@@ -66,22 +63,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponseDto> getAllByName(String name) {
-        return repository.findAllByName(name).stream().map(mapper::toResponseDto).toList();
+    public List<Product> getAllByName(String name) {
+        return repository.findAllByName(name);
     }
 
     @Override
-    public Page<ProductResponseDto> listAll(Pageable pageable) {
-        return repository.findAll(pageable).map(mapper::toResponseDto);
+    public Page<Product> listAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
-    public Page<ProductResponseDto> search(Pageable pageable, ProductSearchCriteriaDto dto) {
+    public Page<Product> search(Pageable pageable, ProductSearchCriteriaDto dto) {
         Specification<Product> spec = Specification.where(ProductSpecification.hasNameLike(dto.getName()))
                 .and(ProductSpecification.hasPriceBetween(dto.getMinPrice(), dto.getMaxPrice()))
                 .and(ProductSpecification.hasStockGreaterThan(dto.getMinStock()))
                 .and(ProductSpecification.hasCategoryLike(dto.getCategory()));
 
-        return repository.findAll(spec, pageable).map(mapper :: toResponseDto);
+        return repository.findAll(spec, pageable);
     }
 }

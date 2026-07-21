@@ -28,6 +28,7 @@ public class Order {
     @CreatedDate
     private LocalDateTime orderDate;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     private OrderStatus status;
 

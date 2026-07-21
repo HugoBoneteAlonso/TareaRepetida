@@ -9,7 +9,7 @@ ALTER TABLE product
     ADD COLUMN category_id BIGINT;
 
 UPDATE product
-    SET category_id = (SELECT id FROM categories WHERE name = 'Sin categoria');
+    SET category_id = (SELECT id FROM category WHERE name = 'Sin categoria');
 
 ALTER TABLE product
     ALTER COLUMN category_id SET NOT NULL;

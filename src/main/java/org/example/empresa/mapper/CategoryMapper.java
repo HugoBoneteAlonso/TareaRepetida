@@ -5,7 +5,7 @@ import org.example.empresa.dto.product.v1.CategoryResponseDto;
 import org.example.empresa.entity.Category;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CategoryMapper {
     CategoryResponseDto toDto(Category category);
     Category toEntity(CategoryRequestDto request);

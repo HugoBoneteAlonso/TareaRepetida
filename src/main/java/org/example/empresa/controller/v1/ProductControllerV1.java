@@ -3,8 +3,9 @@ package org.example.empresa.controller.v1;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.empresa.dto.product.v1.ProductRequestDto;
-import org.example.empresa.dto.product.v1.ProductResponseDto;
+import org.example.empresa.dto.product.v1.ProductResponseDtoV1;
 import org.example.empresa.dto.product.v1.ProductSearchCriteriaDto;
+import org.example.empresa.mapper.ProductMapperV1;
 import org.example.empresa.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,28 +21,29 @@ import java.util.List;
 @RequestMapping("/api/v1/products")
 public class ProductControllerV1 {
     private final ProductService service;
+    private final ProductMapperV1 mapper;
 
     @GetMapping("/name")
-    public List<ProductResponseDto> listAllProductsByName(@RequestParam String name) {
-            return service.getAllByName(name);
+    public List<ProductResponseDtoV1> listAllProductsByName(@RequestParam String name) {
+            return service.getAllByName(name).stream().map(mapper :: toResponseDto).toList();
     }
 
     @GetMapping("/{id}")
-    public ProductResponseDto listProductById(@PathVariable Long id) {
-        return service.getById(id);
+    public ProductResponseDtoV1 listProductById(@PathVariable Long id) {
+        return mapper.toResponseDto(service.getById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductResponseDto createProduct(@Valid @RequestBody ProductRequestDto dto) {
-        return service.create(dto);
+    public ProductResponseDtoV1 createProduct(@Valid @RequestBody ProductRequestDto dto) {
+        return mapper.toResponseDto(service.create(dto));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ProductResponseDto updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequestDto dto) {
-        return service.update(id, dto);
+    public ProductResponseDtoV1 updateProduct(@PathVariable Long id, @Valid @RequestBody ProductRequestDto dto) {
+        return mapper.toResponseDto(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
@@ -52,13 +54,13 @@ public class ProductControllerV1 {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public Page<ProductResponseDto> findAll(Pageable pageable) {
-        return service.listAll(pageable);
+    public Page<ProductResponseDtoV1> findAll(Pageable pageable) {
+        return service.listAll(pageable).map(mapper::toResponseDto);
     }
 
     @GetMapping("/search")
-    public Page<ProductResponseDto> searchProducts(@PageableDefault(size = 20) Pageable pageable
+    public Page<ProductResponseDtoV1> searchProducts(@PageableDefault(size = 20) Pageable pageable
             , @ModelAttribute ProductSearchCriteriaDto dto) {
-        return service.search(pageable, dto);
+        return service.search(pageable, dto).map(mapper::toResponseDto);
     }
 }

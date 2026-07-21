@@ -1,4 +1,4 @@
-CREATE TABLE customer (
+CREATE TABLE customers (
                           id BIGSERIAL PRIMARY KEY,
                           name VARCHAR(100) NOT NULL,
                           email VARCHAR(255) NOT NULL,

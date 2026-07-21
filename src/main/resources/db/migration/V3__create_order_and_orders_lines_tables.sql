@@ -5,10 +5,10 @@ CREATE TABLE orders (
                         status VARCHAR(50) NOT NULL,
                         CONSTRAINT fk_orders_customer
                             FOREIGN KEY (customer_id)
-                                REFERENCES customer(id)
+                                REFERENCES customers(id)
 );
 
-CREATE TABLE order_lines (
+CREATE TABLE order_line (
                              id BIGSERIAL PRIMARY KEY,
                              order_id BIGINT NOT NULL,
                              product_id BIGINT NOT NULL,

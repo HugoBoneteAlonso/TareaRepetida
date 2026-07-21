@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponseDto {
+public class ProductResponseDtoV1 {
 
     private Long id;
 
