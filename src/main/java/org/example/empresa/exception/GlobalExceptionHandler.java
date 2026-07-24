@@ -140,4 +140,11 @@ public class GlobalExceptionHandler {
         return new ErrorResponseDto(LocalDateTime.now(), 401, "Unauthorized",
                 "Token inválido", request.getRequestURI(), UUID.randomUUID());
     }
+
+    @ExceptionHandler(ProductInUseException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponseDto handleProductInUseException(ProductInUseException ex, HttpServletRequest request) {
+        return new ErrorResponseDto(LocalDateTime.now(), 409,"Product In Use",
+                ex.getMessage(), request.getRequestURI(),UUID.randomUUID());
+    }
 }
