@@ -76,7 +76,7 @@
 
         @Test
         void shouldLoginSuccessfully() throws Exception {
-            LoginRequestDto requestDto = new LoginRequestDto("admin@gmail.com", "123456");
+            LoginRequestDto requestDto = new LoginRequestDto("admin@gmail.com", "12345");
 
             mockMvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(requestDto)))

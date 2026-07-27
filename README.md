@@ -1203,6 +1203,122 @@
 }
 ```
 
+##  Auth Examples
+### Register User
+```
+    http://localhost:8080/api/v1/auth/register
+```
+***Body***
+```json
+{
+  "email": "admin@gmail.com",
+  "password": "12345"
+}
+```
+
+***Response***
+```json
+{
+  "id": 57,
+  "email": "admin@gmail.com",
+  "role": "USER"
+}
+```
+
+### Login User
+```
+    http://localhost:8080/api/v1/auth/login
+```
+***Body***
+```json
+{
+  "email": "admin@gmail.com",
+  "password": "12345"
+}
+```
+
+***Response***
+```json
+{
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc4NTE0MTI4OSwiZXhwIjoxNzg1MjI3Njg5fQ.danv9xPXTQ1LiUkxfNGTPf4APxzJi5tDsJAuHpkeFX8gZf95mp9L15W-mX2wwxWwns2Uwf8u6p8wr5Z8kkxFVA",
+  "expiresIn": 86399651,
+  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3ODUxNDEyODksImV4cCI6MTc4NTc0NjA4OX0.wfI69zZ7YGBMOrfH1Ko_9xHdjQQTcOe-KKqOP_PD_ZU3GkRrwk8UusDeGC6U7Jo1_--Yu_MvaoFiG2VrtrL9lQ"
+}
+```
+
+- * Para utilizar el token en Postman se debe de poner el token recibido en el login en la pestaña
+* de 'Authorization' escogiendo el AuthType como BearerToken
+
+##  Levantar PostgreSQL con Podman
+```shell
+    podman compose up -d
+```
+- * A continuacion puedes ejecutar la aplicacion
+
+## Diferencia entre V1 y V2
+
+### Get Product By Id V1
+```
+    http://localhost:8080/api/v1/products/1
+```
+***Response***
+```json
+{
+  "id": 1,
+  "name": "Producto actualizado",
+  "description": "Descripcion 2",
+  "price": 13.02,
+  "stock": 22,
+  "createdAt": "2026-07-17T13:28:47.857869",
+  "category": {
+    "id": 1,
+    "name": "Sin categoria"
+  }
+}
+```
+
+### Get Product By Id V2
+```
+    http://localhost:8080/api/v2/products/1
+```
+***Response***
+```json
+{
+  "id": 1,
+  "name": "Producto actualizado",
+  "description": "Descripcion 2",
+  "stock": 22,
+  "createdAt": "2026-07-17T13:28:47.857869",
+  "category": {
+    "id": 1,
+    "name": "Sin categoria"
+  },
+  "price": {
+    "amount": 13.02,
+    "currency": "EUR"
+  }
+}
+```
+
+## Cache
+### Consultar los caches registrados en la app
+```
+    http://localhost:8080/actuator/caches
+```
+
+### Verificar metricas de los caches
+```
+    http://localhost:8080/actuator/metrics/cache.gets?tag=name:products&tag=result:hit
+    
+    http://localhost:8080/actuator/metrics/cache.gets?tag=name:products&tag=result:miss
+```
+
+### Secuencia de Acciones para comprobar hits y misses
+- * Primero se debera hacer una peticion a la cual se le haya asignado un cache como "GetAllProducts"
+- * A continuacion accederas a ver las metricas donde el valor de miss de ese cache habra subido a 1.0 mientras que hits seguira en 0 
+- * Se vuelve a realizar la misma peticion y esta vez el valor de misses se quedara en 1.0 mientras que hits sumara 1
+
+
 ##  Enlaces usados para la Tarea
 https://stackoverflow.com/questions/60279760/how-to-generate-a-createddate-localdatetime-as-timestamp  
 https://stackoverflow.com/questions/49954812/how-can-you-make-a-created-at-column-generate-the-creation-date-time-automatical  

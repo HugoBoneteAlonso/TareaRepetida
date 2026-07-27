@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
                             "#name + '-' + " +
                             "#status + '-' + " +
                             "#from + '-' + " +
-                            "#to + '-' + ")
+                            "#to")
     public Page<OrderResponseDto> searchOrders(Pageable pageable, String name, OrderStatus status, LocalDateTime from, LocalDateTime to) {
         Specification<Order> spec = Specification.where(OrderSpecification.hasCustomerNameLike(name))
                 .and(OrderSpecification.hasStatus(status))

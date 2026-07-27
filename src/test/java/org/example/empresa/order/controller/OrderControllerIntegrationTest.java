@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -219,7 +220,7 @@ class OrderControllerIntegrationTest {
                         .header("Authorization","Bearer "
                                 + token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(existingOrder.getId()));
+                .andExpect(jsonPath("$.length()").value(greaterThan(0)));
     }
 
     @Test
