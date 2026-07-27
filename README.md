@@ -1246,14 +1246,13 @@
 }
 ```
 
-- * Para utilizar el token en Postman se debe de poner el token recibido en el login en la pestaña
-* de 'Authorization' escogiendo el AuthType como BearerToken
+- Para utilizar el token en Postman se debe de poner el token recibido en el login en la pestaña de 'Authorization' escogiendo el AuthType como BearerToken
 
 ##  Levantar PostgreSQL con Podman
 ```shell
     podman compose up -d
 ```
-- * A continuacion puedes ejecutar la aplicacion
+- A continuacion puedes ejecutar la aplicacion
 
 ## Diferencia entre V1 y V2
 
@@ -1314,9 +1313,9 @@
 ```
 
 ### Secuencia de Acciones para comprobar hits y misses
-- * Primero se debera hacer una peticion a la cual se le haya asignado un cache como "GetAllProducts"
-- * A continuacion accederas a ver las metricas donde el valor de miss de ese cache habra subido a 1.0 mientras que hits seguira en 0 
-- * Se vuelve a realizar la misma peticion y esta vez el valor de misses se quedara en 1.0 mientras que hits sumara 1
+- Primero se debera hacer una peticion a la cual se le haya asignado un cache como "GetAllProducts"
+- A continuacion accederas a ver las metricas donde el valor de miss de ese cache habra subido a 1.0 mientras que hits seguira en 0 
+- Se vuelve a realizar la misma peticion y esta vez el valor de misses se quedara en 1.0 mientras que hits sumara 1
 
 
 ##  Enlaces usados para la Tarea
